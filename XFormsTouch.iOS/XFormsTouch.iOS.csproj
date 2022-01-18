@@ -58,7 +58,7 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)\XFormsTouch\XFormsTouch.csproj" />
+    <ProjectReference Include="$(SolutionDir)\XFormsTouch.Shared\XFormsTouch.Shared.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
