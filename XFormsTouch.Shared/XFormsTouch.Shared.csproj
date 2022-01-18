@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;xamarinios10;monoandroid10.0</TargetFrameworks>
     <AssemblyName>XFormsTouch</AssemblyName>
     <AssemblyAuthor>Float,Zauberzeug GmbH</AssemblyAuthor>
     <AssemblyDescription>This NuGet library provides touch event notifications for Android and iOS via Xamarin.Forms.Effect mechanism.</AssemblyDescription>
@@ -15,6 +15,28 @@
   <ItemGroup>
     <AdditionalFiles Include="$(SolutionDir)\stylecop.json" />
   </ItemGroup>
+  <ItemGroup>
+		<Compile Remove="*.android.cs" />
+		<Compile Remove="*.ios.cs" />
+	</ItemGroup>
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('xamarinios')) ">
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+		<Compile Include="**\*.ios.cs" />
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.2.0.5" />
+		<Compile Include="**\*.android.cs" />
+	</ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' " />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <PackageDescription>$(AssemblyDescription)</PackageDescription>

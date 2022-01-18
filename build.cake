@@ -38,6 +38,7 @@ readonly var project = new
 
 var assemblyVersion = "0.0.0.0";
 var packageVersion = "0.0.0.0-feat";
+var infoVersion = "0.0.0.0-feat+aabbccdd";
 
 // Tasks
 
@@ -63,6 +64,7 @@ Task("GitVersion")
 
         assemblyVersion = $"{gitVersion.AssemblyVersion}";
         packageVersion = $"{gitVersion.AssemblyFileVersion}";
+        infoVersion = $"{gitVersion.AssemblyInformationalVersion}";
 
         Information($"Assembly version: {assemblyVersion}");
         Information($"NuGet version: {gitVersion.AssemblyFileVersion}");
@@ -96,14 +98,9 @@ Task("Build")
     .IsDependentOn("GitVersion")
     .Does(() =>
     {
-        DotNetCoreBuild(project.Main, new DotNetCoreBuildSettings
-        {
-            Configuration = configuration,
-            NoIncremental = true,
-            NoRestore = true,
-            MSBuildSettings = new DotNetCoreMSBuildSettings()
-                .SetVersion(packageVersion)
-        });
+        MSBuild(project.Main, new MSBuildSettings()
+            .SetConfiguration(configuration)
+        );
     });
 
 Task("Test")
@@ -126,20 +123,22 @@ Task("Test")
     });
 
 Task("Pack")
-    .IsDependentOn("Build")
+    .IsDependentOn("RestorePackages")
+    .IsDependentOn("GitVersion")
     .Does(() =>
     {
-        DotNetCorePack(project.Main, new DotNetCorePackSettings
-        {
-            Configuration = configuration,
-            NoBuild = true,
-            NoRestore = true,
-            IncludeSymbols = true,
-            MSBuildSettings = new DotNetCoreMSBuildSettings()
-                .SetVersion(packageVersion)
-        });
+        MSBuild(project.Main, new MSBuildSettings()
+            .SetConfiguration(configuration)
+            .WithProperty("PackageVersion", packageVersion)
+            .WithProperty("FileVersion", packageVersion)
+            .WithProperty("InformationalVersion", infoVersion)
+            .WithProperty("Version", packageVersion)
+            .WithProperty("PackageVersion", packageVersion)
+            .WithProperty("AssemblyVersion", assemblyVersion)
+            .WithTarget("Pack")
+        );
 
-        var packPath = File($"./{projectName}.Shared/bin/{configuration}/netstandard2.0/XFormsTouch.dll");
+        var packPath = File($"./{projectName}.Shared/bin/{configuration}/Float.XFormsTouch.{packageVersion}.nupkg");
         var packHash = CalculateFileHash(packPath).ToHex();
         var packSize = $"{FileSize(packPath)}";
         Information($"  Assembly hash: {packHash}");
