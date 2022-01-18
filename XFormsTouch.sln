@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XFormsTouch.Shared", "XFormsTouch.Shared\XFormsTouch.Shared.csproj", "{9D098589-01D0-4565-9F84-3CD2BB39FAA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XFormsTouch", "XFormsTouch\XFormsTouch.csproj", "{9D098589-01D0-4565-9F84-3CD2BB39FAA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

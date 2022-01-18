@@ -24,13 +24,13 @@ readonly string nugetToken = Argument("nugetToken", string.Empty);
 
 readonly var root = MakeAbsolute(new DirectoryPath("./"));
 readonly var isReleaseBuild = configuration == "Release";
-readonly var netAssemblyInfoLocation = File($"./{projectName}.Shared/Properties/AssemblyInfo.cs");
+readonly var netAssemblyInfoLocation = File($"./{projectName}/Properties/AssemblyInfo.cs");
 readonly var testProjectName = $"{projectName}.Tests";
 readonly var solution = $"{projectName}.sln";
 
 readonly var project = new
 {
-    Main = $"./{projectName}.Shared/{projectName}.Shared.csproj",
+    Main = $"./{projectName}/{projectName}.csproj",
     Test = $"./{testProjectName}/{testProjectName}.csproj",
 };
 
@@ -138,7 +138,7 @@ Task("Pack")
             .WithTarget("Pack")
         );
 
-        var packPath = File($"./{projectName}.Shared/bin/{configuration}/Float.XFormsTouch.{packageVersion}.nupkg");
+        var packPath = File($"./{projectName}/bin/{configuration}/Float.XFormsTouch.{packageVersion}.nupkg");
         var packHash = CalculateFileHash(packPath).ToHex();
         var packSize = $"{FileSize(packPath)}";
         Information($"  Assembly hash: {packHash}");
@@ -160,7 +160,7 @@ Task("Deploy")
             throw new Exception("--nugetToken is required.");
         }
 
-        if (!(GetFiles($"./{projectName}.Shared/bin/{configuration}/*.nupkg").First() is FilePath packageFile))
+        if (!(GetFiles($"./{projectName}/bin/{configuration}/*.nupkg").First() is FilePath packageFile))
         {
             throw new Exception("Unable to find NuGet package file.");
         }
@@ -180,7 +180,7 @@ Task("Deploy")
             },
             new []
             {
-                $"./{projectName}.Shared/bin/{configuration}/{projectName}.{assemblyVersion}.nupkg",
+                $"./{projectName}/bin/{configuration}/{projectName}.{assemblyVersion}.nupkg",
             }
         );
     });
