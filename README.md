@@ -1,4 +1,6 @@
-# Float.XFormsTouch [![Test](https://github.com/gowithfloat/Float.XFormsTouch/actions/workflows/test.yml/badge.svg)](https://github.com/gowithfloat/Float.XFormsTouch/actions/workflows/test.yml) [![NuGet](https://img.shields.io/nuget/v/Float.XFormsTouch)](https://www.nuget.org/packages/Float.XFormsTouch/)
+# Float.XFormsTouch [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/) [![Test](https://github.com/gowithfloat/Float.XFormsTouch/actions/workflows/test.yml/badge.svg)](https://github.com/gowithfloat/Float.XFormsTouch/actions/workflows/test.yml) [![NuGet](https://img.shields.io/nuget/v/Float.XFormsTouch)](https://www.nuget.org/packages/Float.XFormsTouch/)
+
+# [DEPRECATED]
 
 This NuGet library provides touch event notifications for Android and iOS via Xamarin.Forms.Effect mechanism as shown in one of the xamarin samples.
 
